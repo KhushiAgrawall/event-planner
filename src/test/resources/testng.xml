@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="AllTestsSuite" verbose="1">
+    <test name="CreationTests">
+        <groups>
+            <run>
+                <include name="creation"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.ultralesson.eventplanner.EventPlannerTest"/>
+            <class name="com.ultralesson.eventplanner.AttendeeTest"/>
+            <class name="com.ultralesson.eventplanner.VenueTest"/>
+            <class name="com.ultralesson.eventplanner.EventTest"/>
+        </classes>
+    </test>
+</suite>
