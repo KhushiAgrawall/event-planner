@@ -16,10 +16,10 @@ public class InvitationSender {
             String venueName = event.getVenue().getName();
 
             // Deliberate bug: using '==' instead of equals() for string comparison
-            /*if (email == "" || eventName == "" || eventDescription == "" || venueName == "") {
+            if (email == "" || eventName == "" || eventDescription == "" || venueName == "") {
                 System.out.println("Skipping invitation due to incomplete information.");
                 continue;
-            }*/
+            }
             if ("".equals(email) || "".equals(eventName) || "".equals(eventDescription) || "".equals(venueName)) {
                 System.out.println("Skipping invitation due to incomplete information.");
                 continue;
