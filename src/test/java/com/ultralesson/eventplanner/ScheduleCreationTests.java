@@ -11,30 +11,38 @@ import java.time.LocalDateTime;
 
 public class ScheduleCreationTests {
     @Test
-    public void testScheduleCreation() {
+    public void testValidScheduleCreation() {
         EventPlanner eventPlanner = new EventPlanner();
-        Venue venue = new Venue(1, "Venue Test 1", "Intellej street", 100);
-        Event event = new Event(1, "Event Test 1", "Event Test Description", venue);
+        int initialScheduleCount = eventPlanner.getSchedules().size();
+        Venue venue = new Venue(1, "Conference Hall", "123 Testing street", 300);
+        Event event = new Event(1, "Technical  Meeting", "A meetup for tech enthusiasts", venue);
         LocalDateTime startTime = LocalDateTime.now().plusDays(1);
-        LocalDateTime endTime = startTime.plusHours(3);
-
-        eventPlanner.scheduleEvent(event, venue, startTime, endTime);
-        Schedule createdSchedule = eventPlanner.getSchedules().get(0);
-
-        Assert.assertNotNull(createdSchedule, "Schedule should be created");
-        Assert.assertEquals(createdSchedule.getEvent(), event, "Scheduled event should match the event created");
-        Assert.assertEquals(createdSchedule.getVenue(), venue, "Scheduled venue should match the venue provided");
-        Assert.assertEquals(createdSchedule.getStartTime(), startTime, "Schedule should have the correct start time");
-        Assert.assertEquals(createdSchedule.getEndTime(), endTime, "Schedule should have the correct end time");
-    }
-    /*@Test(expectedExceptions = IllegalArgumentException.class)
-    public void testSchedulingWithPastDate() {
-        EventPlanner eventPlanner = new EventPlanner();
-        Venue venue = new Venue(1, "Venue Test 2", "Intellej street", 100);
-        Event event = new Event(1, "Event Test 2", "Event Test Description", venue);
-        LocalDateTime startTime = LocalDateTime.now().minusDays(1); // Past date
         LocalDateTime endTime = startTime.plusHours(2);
 
+        // Action: Schedule the event
         eventPlanner.scheduleEvent(event, venue, startTime, endTime);
-    }*/
+
+        // Assertions: Verify schedule is correctly created and stored
+        int newScheduleCount = eventPlanner.getSchedules().size();
+        Schedule createdSchedule = eventPlanner.getSchedules().get(initialScheduleCount);
+
+        Assert.assertEquals(newScheduleCount, initialScheduleCount + 1, "New schedule should be added.");
+        Assert.assertEquals(createdSchedule.getEvent(), event, "The event in the schedule should match the created event.");
+        Assert.assertEquals(createdSchedule.getVenue(), venue, "The venue in the schedule should match the specified venue.");
+        Assert.assertEquals(createdSchedule.getStartTime(), startTime, "The start time should match what was scheduled.");
+        Assert.assertEquals(createdSchedule.getEndTime(), endTime, "The end time should match what was scheduled.");
+    }
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testScheduleCreationWithPastStartTime(){
+        EventPlanner eventPlanner = new EventPlanner();
+        Venue venue = new Venue(2, "Main Auditorium", "123 testing street", 200);
+        Event event = new Event(3, "Music Concert", "Annual music gala", venue);
+        LocalDateTime startTime = LocalDateTime.now().minusDays(1); // Scheduling in the past
+        LocalDateTime endTime = startTime.plusHours(3);
+
+        // Action: Attempt to schedule the event with an invalid start time
+        eventPlanner.scheduleEvent(event, venue, startTime, endTime);
+
+        // The test should expect an IllegalArgumentException due to the past start time.
+    }
 }
