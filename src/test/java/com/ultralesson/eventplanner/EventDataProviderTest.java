@@ -15,38 +15,18 @@ import org.testng.annotations.Test;
                  // ... Additional valid data sets
                  {2, null, "Developer Meetup", new Venue(2, "Innovation Hub", "City B", 200), false, "Event name cannot be null."},
                  // ... Additional edge case and invalid data sets
+                 {1,"Birthday Party","Sakshi Birthday Party", new Venue(1, "Hotel Aroma","Nimzari Naka, Shirpur",100)},
+                 {2,"Freshers Party","QK Freshers Party", new Venue(1, "Cafe corner","Dadar, Mumbai",30)},
+                 // Edge cases
+                 {3, "", "Empty Name Event", new Venue(2, "Empty Venue","Empty City",10)},
+                 {4, "Event with null description", null, new Venue(3, "Venue with null location", null, 50)},
+                 // Invalid or incomplete data sets
+                 {5, null, "Null Name Event", new Venue(4, "Null Venue","Null City",20)},
+                 {6, "Incomplete Venue Event", "Event with incomplete venue", new Venue(5, "", "", -1)},
+                 {7, "Event with null venue", "Null Venue Event", null}
          };
      }
-
-     @Test(dataProvider = "eventDataProvider")
-     public void createEventTest(int id, String name, String description, Venue venue, boolean expectSuccess, String expectedErrorMessage) {
-         try {
-             Event event = new Event(id, name, description, venue);
-             // Further actions and validations...
-             Assert.assertTrue(expectSuccess, "Event creation should succeed");
-
-         } catch (IllegalArgumentException e) {
-             Assert.assertFalse(expectSuccess, "Event creation should fail");
-             Assert.assertEquals(e.getMessage(), expectedErrorMessage, "Error message should match expected result");
-         }
-     }
-
-       /*@DataProvider(name = "eventDataProvider")
-        public Object[][] eventData() {
-            return new Object[][]{
-                    // Valid event details
-                    {1,"Birthday Party","Sakshi Birthday Party", new Venue(1, "Hotel Aroma","Nimzari Naka, Shirpur",100)},
-                    {2,"Freshers Party","QK Freshers Party", new Venue(1, "Cafe corner","Dadar, Mumbai",30)},
-                    // Edge cases
-                    {3, "", "Empty Name Event", new Venue(2, "Empty Venue","Empty City",10)},
-                    {4, "Event with null description", null, new Venue(3, "Venue with null location", null, 50)},
-                    // Invalid or incomplete data sets
-                    {5, null, "Null Name Event", new Venue(4, "Null Venue","Null City",20)},
-                    {6, "Incomplete Venue Event", "Event with incomplete venue", new Venue(5, "", "", -1)},
-                    {7, "Event with null venue", "Null Venue Event", null}
-            };
-        }
-
+     
      @Test(dataProvider = "eventDataProvider")
      public void createEventTest(int id, String name, String description, Venue venue, boolean expectSuccess, String expectedErrorMessage) {
          EventPlanner eventPlanner = new EventPlanner();
@@ -88,6 +68,6 @@ import org.testng.annotations.Test;
                  Assert.fail("Event creation failed with valid data.");
              }
          }
-     }*/
+     }
 
     }
