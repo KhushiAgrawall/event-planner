@@ -8,7 +8,30 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
  public class EventDataProviderTest {
-        @DataProvider(name = "eventDataProvider")
+     @DataProvider(name = "eventDataProvider")
+     public Object[][] eventData() {
+         return new Object[][]{
+                 {1, "Tech Conf", "Technology Conference", new Venue(1, "Convention Center", "City A", 500), true, ""},
+                 // ... Additional valid data sets
+                 {2, null, "Developer Meetup", new Venue(2, "Innovation Hub", "City B", 200), false, "Event name cannot be null."},
+                 // ... Additional edge case and invalid data sets
+         };
+     }
+
+     @Test(dataProvider = "eventDataProvider")
+     public void createEventTest(int id, String name, String description, Venue venue, boolean expectSuccess, String expectedErrorMessage) {
+         try {
+             Event event = new Event(id, name, description, venue);
+             // Further actions and validations...
+             Assert.assertTrue(expectSuccess, "Event creation should succeed");
+
+         } catch (IllegalArgumentException e) {
+             Assert.assertFalse(expectSuccess, "Event creation should fail");
+             Assert.assertEquals(e.getMessage(), expectedErrorMessage, "Error message should match expected result");
+         }
+     }
+
+       /*@DataProvider(name = "eventDataProvider")
         public Object[][] eventData() {
             return new Object[][]{
                     // Valid event details
@@ -24,7 +47,7 @@ import org.testng.annotations.Test;
             };
         }
 
-     /*@Test(dataProvider = "eventDataProvider")
+     @Test(dataProvider = "eventDataProvider")
      public void createEventTest(int id, String name, String description, Venue venue, boolean expectSuccess, String expectedErrorMessage) {
          EventPlanner eventPlanner = new EventPlanner();
          try {
@@ -41,7 +64,7 @@ import org.testng.annotations.Test;
                  Assert.assertEquals(e.getMessage(), expectedErrorMessage, "Expected error message not received.");
              }
          }
-     }*/
+     }
      @Test(dataProvider = "eventDataProvider")
      public void createEventTest(int id, String name, String description, Venue venue) {
          EventPlanner eventPlanner=new EventPlanner();
@@ -65,6 +88,6 @@ import org.testng.annotations.Test;
                  Assert.fail("Event creation failed with valid data.");
              }
          }
-     }
-     
+     }*/
+
     }
