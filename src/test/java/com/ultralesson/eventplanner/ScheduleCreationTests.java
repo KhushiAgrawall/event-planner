@@ -45,4 +45,23 @@ public class ScheduleCreationTests {
 
         // The test should expect an IllegalArgumentException due to the past start time.
     }
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testScheduleCreationWithOverlappingTimes(){
+        EventPlanner eventPlanner = new EventPlanner();
+        Venue venue = new Venue(1, "Conference Hall", "123 Testing street", 300);
+        Event event = new Event(1, "Technical Meeting", "A meetup for tech enthusiasts", venue);
+        LocalDateTime startTime = LocalDateTime.now().plusDays(1);
+        LocalDateTime endTime = startTime.plusHours(2);
+
+        eventPlanner.scheduleEvent(event, venue, startTime, endTime);
+
+        // Attempting to schedule another event at the same venue with overlapping times
+        Event secondEvent = new Event(2, "Another Meeting", "Another meetup", venue);
+        LocalDateTime overlappingStartTime = startTime.plusMinutes(30);
+        LocalDateTime overlappingEndTime = overlappingStartTime.plusHours(1);
+
+        eventPlanner.scheduleEvent(secondEvent, venue, overlappingStartTime, overlappingEndTime);
+        // Expected to throw IllegalArgumentException due to time overlap.
+    }
+
 }
