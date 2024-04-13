@@ -14,9 +14,9 @@ public class AttendeeTest {
         attendee = new Attendee(1, "Khushi", "agrawal@123");
 
     }
-    @Test(groups = {"creation"})
+    @Test(groups = {"creation", "attendeeCreation"}, priority = 1)
     public void testAttendeeCreation(){
-    //Attendee attendee = new Attendee(1, "Khushi", "agrawal@123");
+    Attendee attendee = new Attendee(1, "Khushi", "agrawal@123");
         Assert.assertEquals(attendee.getName(), "Khushi");
         Assert.assertEquals(attendee.getEmail(), "agrawal@123");
         Assert.assertEquals(attendee.getId(), 1);

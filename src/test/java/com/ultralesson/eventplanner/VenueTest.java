@@ -12,15 +12,15 @@ public class VenueTest {
 
         venue = new Venue(1, "Heavenly Palace", "Near Central Park", 1000);
     }
-    @Test
+    @Test(groups ={"creation", "VenueCreation"}, priority = 2)
     public void testVenueCreation(){
-        //Venue venue = new Venue(1, "Heavenly Palace", "Near Central Park", 1000);
+        Venue venue = new Venue(1, "Heavenly Palace", "Near Central Park", 1000);
         Assert.assertEquals(venue.getId(), 1);
         Assert.assertEquals(venue.getName(), "Heavenly Palace");
         Assert.assertEquals(venue.getAddress(), "Near Central Park");
         Assert.assertEquals(venue.getCapacity(), 1000);
     }
-    @Test(groups = {"creation"})
+    @Test
     public void testVenueCreation1(){
         Assert.assertNotNull(venue, "Venue instance should not null");
     }

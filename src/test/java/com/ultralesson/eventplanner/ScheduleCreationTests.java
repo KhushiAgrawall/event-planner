@@ -17,13 +17,10 @@ public class ScheduleCreationTests {
         Venue venue = new Venue(1, "Conference Hall", "123 Testing street", 300);
         Event event = new Event(1, "Technical  Meeting", "A meetup for tech enthusiasts", venue);
         LocalDateTime startTime = LocalDateTime.now().plusDays(1);
-        LocalDateTime endTime = startTime.plusHours(2);
-
-        // Action: Schedule the event
+        LocalDateTime endTime = startTime.plusHours(2);        // Action: Schedule the event
         eventPlanner.scheduleEvent(event, venue, startTime, endTime);
 
-        // Assertions: Verify schedule is correctly created and stored
-        int newScheduleCount = eventPlanner.getSchedules().size();
+        int newScheduleCount = eventPlanner.getSchedules().size();     //Verify schedule is correctly created and stored
         Schedule createdSchedule = eventPlanner.getSchedules().get(initialScheduleCount);
 
         Assert.assertEquals(newScheduleCount, initialScheduleCount + 1, "New schedule should be added.");

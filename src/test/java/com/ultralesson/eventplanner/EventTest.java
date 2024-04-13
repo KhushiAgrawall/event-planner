@@ -16,7 +16,7 @@ public class EventTest {
         System.out.println("Setting up the resources for event class");
     }
 
-    @Test(groups = {"creation"})
+    @Test(groups = {"creation", "EventCreation"}, priority=3)
     public void testEventCreation(){
           venue = new Venue(1, "Heavenly Palace", "Near Central Park", 1000);
          event = new Event(1,"convocation ceremony", "Degree Completion", venue);

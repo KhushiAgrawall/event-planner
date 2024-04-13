@@ -4,6 +4,9 @@
         <groups>
             <run>
                 <include name="creation"/>
+                <include name="attendeeCreation"/>
+                <include name="venueCreation"/>
+                <include name="eventCreation"/>
             </run>
         </groups>
         <classes>

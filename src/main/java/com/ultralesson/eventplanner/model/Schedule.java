@@ -1,6 +1,7 @@
 package com.ultralesson.eventplanner.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -90,12 +91,24 @@ public class Schedule {
                 ", endTime=" + endTime +
                 '}';
     }
-    public boolean isValidstartTime(LocalDateTime startTime){
-        String regex = "^\\\\d{4}-\\\\d{2}-\\\\d{2}T\\\\d{2}:\\\\d{2}:\\\\d{2}(\\\\.\\\\d+)?$";
+    /*public boolean isValidstartTime(LocalDateTime startTime){
+        //String regex = "^\\\\d{4}-\\\\d{2}-\\\\d{2}T\\\\d{2}:\\\\d{2}:\\\\d{2}(\\\\.\\\\d+)?$";
         String stringStartTime=startTime.toString();
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(stringStartTime);
-        return matcher.matches();
+        //Pattern pattern = Pattern.compile(regex);
+       // Matcher matcher = pattern.matcher(stringStartTime);
+        return true;
+    }*/
+    public boolean isValidstartTime(LocalDateTime startTime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        try {
+            // Try to parse the start time using the specified format
+            String formattedStartTime = startTime.format(formatter);
+            // If parsing is successful, return true
+            return true;
+        } catch (Exception e) {
+            // If parsing fails, return false
+            return false;
+        }
     }
 }
 
