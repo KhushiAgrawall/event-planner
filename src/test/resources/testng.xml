@@ -15,5 +15,6 @@
             <class name="com.ultralesson.eventplanner.VenueTest"/>
             <class name="com.ultralesson.eventplanner.EventTest"/>
         </classes>
+
     </test>
 </suite>

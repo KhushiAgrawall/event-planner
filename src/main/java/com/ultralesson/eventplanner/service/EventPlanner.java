@@ -79,6 +79,10 @@ public class EventPlanner {
         events.removeIf(event -> event.getId() == eventId);
         schedules.removeIf(schedule -> schedule.getEvent().getId() == eventId);
     }
+    public void removeVenue(int venueId) {
+        venues.removeIf(venue -> venue.getId() == venueId);
+        schedules.removeIf(schedule -> schedule.getVenue().getId() == venueId);
+    }
 
     public void deleteEvent(int eventId) {
         cancelEvent(eventId);

@@ -22,9 +22,10 @@ public class InvitationSender {
             }*/
             if ("".equals(email) || "".equals(eventName) || "".equals(eventDescription) || "".equals(venueName)) {
                 System.out.println("Skipping invitation due to incomplete information.");
-                continue;
+                continue; // Skip sending invitation for this attendee
             }
 
+            // Send the invitation for this attendee
             System.out.println("Sending invitation to " + email);
             // Send the actual invitation (e.g., by calling an email service)
         }
