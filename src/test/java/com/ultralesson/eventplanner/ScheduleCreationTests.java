@@ -29,36 +29,45 @@ public class ScheduleCreationTests {
         Assert.assertEquals(createdSchedule.getStartTime(), startTime, "The start time should match what was scheduled.");
         Assert.assertEquals(createdSchedule.getEndTime(), endTime, "The end time should match what was scheduled.");
     }
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testScheduleCreationWithPastStartTime(){
+    @Test(expectedExceptions = IllegalArgumentException.class, description = "Should throw exception when attempting to schedule an event with a past start time")
+    public void testScheduleCreationWithPastStartTime() {
+        // Create an EventPlanner instance
         EventPlanner eventPlanner = new EventPlanner();
-        Venue venue = new Venue(2, "Main Auditorium", "123 testing street", 200);
-        Event event = new Event(3, "Music Concert", "Annual music gala", venue);
-        LocalDateTime startTime = LocalDateTime.now().minusDays(1); // Scheduling in the past
-        LocalDateTime endTime = startTime.plusHours(3);
 
-        // Action: Attempt to schedule the event with an invalid start time
-        eventPlanner.scheduleEvent(event, venue, startTime, endTime);
-
-        // The test should expect an IllegalArgumentException due to the past start time.
-    }
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testScheduleCreationWithOverlappingTimes(){
-        EventPlanner eventPlanner = new EventPlanner();
+        // Define a venue
         Venue venue = new Venue(1, "Conference Hall", "123 Testing street", 300);
+
+        // Create an event with a past start time
         Event event = new Event(1, "Technical Meeting", "A meetup for tech enthusiasts", venue);
-        LocalDateTime startTime = LocalDateTime.now().plusDays(1);
+        LocalDateTime startTime = LocalDateTime.now().minusDays(1); // Scheduling in the past
         LocalDateTime endTime = startTime.plusHours(2);
 
+        // Attempt to schedule the event with a past start time
         eventPlanner.scheduleEvent(event, venue, startTime, endTime);
+    }
 
-        // Attempting to schedule another event at the same venue with overlapping times
-        Event secondEvent = new Event(2, "Another Meeting", "Another meetup", venue);
-        LocalDateTime overlappingStartTime = startTime.plusMinutes(30);
+    @Test(expectedExceptions = IllegalArgumentException.class, description = "Should throw exception when attempting to schedule events with overlapping times")
+    public void testScheduleCreationWithOverlappingTimes() {
+        // Create an EventPlanner instance
+        EventPlanner eventPlanner = new EventPlanner();
+
+        // Define a venue
+        Venue venue = new Venue(1, "Conference Hall", "123 Testing street", 300);
+
+        // Schedule the first event
+        Event event1 = new Event(1, "Technical Meeting", "A meetup for tech enthusiasts", venue);
+        LocalDateTime startTime1 = LocalDateTime.now().plusDays(1);
+        LocalDateTime endTime1 = startTime1.plusHours(2);
+        eventPlanner.scheduleEvent(event1, venue, startTime1, endTime1);
+
+        // Attempt to schedule another event with overlapping times
+        Event event2 = new Event(2, "Another Meeting", "Another meetup", venue);
+        LocalDateTime overlappingStartTime = startTime1.plusMinutes(30);
         LocalDateTime overlappingEndTime = overlappingStartTime.plusHours(1);
 
-        eventPlanner.scheduleEvent(secondEvent, venue, overlappingStartTime, overlappingEndTime);
-        // Expected to throw IllegalArgumentException due to time overlap.
+        // Attempt to schedule the second event with overlapping times
+        eventPlanner.scheduleEvent(event2, venue, overlappingStartTime, overlappingEndTime);
     }
+
 
 }
