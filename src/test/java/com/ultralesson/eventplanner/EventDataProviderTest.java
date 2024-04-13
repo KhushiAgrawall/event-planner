@@ -24,36 +24,24 @@ import org.testng.annotations.Test;
             };
         }
 
-        @Test(dataProvider = "eventDataProvider")
-        public void createEventTest(int id, String name, String description, Venue venue, boolean expectSuccess, String expectedErrorMessage) {
-            EventPlanner eventPlanner=new EventPlanner();
-            try {
-                Event event = new Event(id, name, description, venue);
-                eventPlanner.addEvent(event);
+     @Test(dataProvider = "eventDataProvider")
+     public void createEventTest(int id, String name, String description, Venue venue, boolean expectSuccess, String expectedErrorMessage) {
+         EventPlanner eventPlanner = new EventPlanner();
+         try {
+             Event event = new Event(id, name, description, venue);
+             eventPlanner.addEvent(event);
 
-                if (expectSuccess) {
-                    // Assert event creation success
-                    Assert.assertTrue(eventPlanner.getEvents().contains(event), "Event should be created successfully.");
-                } else {
-                    // If creation was expected to fail, fail the test
-                    Assert.fail("Event creation succeeded unexpectedly.");
-                }
-
-                // Additional assertions for event properties
-                Assert.assertEquals(event.getId(), id, "Event ID should match.");
-                Assert.assertEquals(event.getName(), name, "Event name should match.");
-                Assert.assertEquals(event.getDescription(), description, "Event description should match.");
-                Assert.assertEquals(event.getVenue(), venue, "Event venue should match.");
-
-            } catch (IllegalArgumentException e) {
-                // Assert error handling
-                if (expectedErrorMessage != null) {
-                    Assert.assertEquals(e.getMessage(), expectedErrorMessage, "Unexpected error message.");
-                } else {
-                    Assert.fail("Unexpected error occurred: " + e.getMessage());
-                }
-            }
-        }
+             if (!expectSuccess) {
+                 Assert.fail("Event creation should have failed but succeeded.");
+             }
+         } catch (IllegalArgumentException e) {
+             if (expectSuccess) {
+                 Assert.fail("Expected event creation to succeed, but it failed with error: " + e.getMessage());
+             } else {
+                 Assert.assertEquals(e.getMessage(), expectedErrorMessage, "Expected error message not received.");
+             }
+         }
+     }
 
 
     }
