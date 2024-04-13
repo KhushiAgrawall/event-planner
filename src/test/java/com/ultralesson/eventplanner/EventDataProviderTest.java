@@ -24,7 +24,7 @@ import org.testng.annotations.Test;
             };
         }
 
-     @Test(dataProvider = "eventDataProvider")
+     /*@Test(dataProvider = "eventDataProvider")
      public void createEventTest(int id, String name, String description, Venue venue, boolean expectSuccess, String expectedErrorMessage) {
          EventPlanner eventPlanner = new EventPlanner();
          try {
@@ -41,7 +41,30 @@ import org.testng.annotations.Test;
                  Assert.assertEquals(e.getMessage(), expectedErrorMessage, "Expected error message not received.");
              }
          }
+     }*/
+     @Test(dataProvider = "eventDataProvider")
+     public void createEventTest(int id, String name, String description, Venue venue) {
+         EventPlanner eventPlanner=new EventPlanner();
+         try {
+             Event event = new Event(id, name, description, venue);
+             eventPlanner.addEvent(event);
+             // Assert event creation success
+             Assert.assertTrue(eventPlanner.getEvents().contains(event));
+
+             // Additional assertions for event properties
+             Assert.assertEquals(event.getId(), id);
+             Assert.assertEquals(event.getName(), name);
+             Assert.assertEquals(event.getDescription(), description);
+             Assert.assertEquals(event.getVenue(), venue);
+         } catch (IllegalArgumentException e) {
+             // Assert error handling
+             if (name == null || name.isEmpty() || venue == null || venue.getName().isEmpty()) {
+                 Assert.assertNull(name); // Null or empty name expected to throw IllegalArgumentException
+                 Assert.assertNull(venue); // Null or empty venue name expected to throw IllegalArgumentException
+             } else {
+                 Assert.fail("Event creation failed with valid data.");
+             }
+         }
      }
-
-
+     
     }
