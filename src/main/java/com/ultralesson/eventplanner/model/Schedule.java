@@ -91,14 +91,14 @@ public class Schedule {
                 ", endTime=" + endTime +
                 '}';
     }
-    /*public boolean isValidstartTime(LocalDateTime startTime){
+    public boolean isValidstartTime(LocalDateTime startTime){
         //String regex = "^\\\\d{4}-\\\\d{2}-\\\\d{2}T\\\\d{2}:\\\\d{2}:\\\\d{2}(\\\\.\\\\d+)?$";
         String stringStartTime=startTime.toString();
         //Pattern pattern = Pattern.compile(regex);
        // Matcher matcher = pattern.matcher(stringStartTime);
         return true;
-    }*/
-    public boolean isValidstartTime(LocalDateTime startTime){
+    }
+   /* public boolean isValidstartTime(LocalDateTime startTime){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         try {
             // Try to parse the start time using the specified format
@@ -109,6 +109,6 @@ public class Schedule {
             // If parsing fails, return false
             return false;
         }
-    }
+    }*/
 }
 
