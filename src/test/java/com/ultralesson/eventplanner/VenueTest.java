@@ -1,4 +1,5 @@
 package com.ultralesson.eventplanner;
+import com.ultralesson.eventplanner.exceptions.VenueException;
 import com.ultralesson.eventplanner.model.Event;
 import com.ultralesson.eventplanner.model.Venue;
 import com.ultralesson.eventplanner.service.EventPlanner;
@@ -37,14 +38,25 @@ public class VenueTest {
     public void shouldThrowExceptionForNegativeCapacity() {
         Venue venue = new Venue(1, "Test Venue 1", "Test Address 1", -10);
     }
+    @Test(expectedExceptions = VenueException.class)
+    public void userShouldNotBeAbleToCreateVenueWithoutName() {
+        venue = new Venue(1, null, "mumbai", 70);
+    }
+
     @Test(description = "Test case for assigning venue to events and verifying")
     public void testVenuetoEvent(){
-        Venue venue;
-        Event event;
-        event=new Event(1,"farewell","Party for new seniors",null);
-        venue=new Venue(1,"Hotel aroma","Ville Parle, shirpur",70);
-        event.setVenue(venue);
-        Assert.assertEquals(event.getVenue(), venue, "Venue should be assigned correctly");
+        Venue venue1=new Venue(1,"Hotel Aroma","Dadar, Mumbai",80);
+        Venue venue2=new Venue(1,"Hotel Aroma","Dadar, Mumbai",80);
+        Event event=new Event(1,"Flash Mob","lets enjoy the evening ",venue1);
+
+        event.setVenue(venue2);
+        Assert.assertEquals(event.getVenue(), venue2, "Venue should be assigned correctly");
+    }
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testVenueToEventForNullPointer(){
+        Venue venue=new Venue(1,"Hotel Aroma","Dadar, Mumbai",80);
+        Event event=new Event(1,"Flash Mob","lets enjoy the evening",new Venue(1,"Hotel Aroma","Dadar, Mumbai",80));
+        event.setVenue(null);
     }
 
     @Test(description = "Add venue to event-planner")
@@ -79,6 +91,7 @@ public class VenueTest {
         Assert.assertFalse(eventPlanner.getVenues().contains(venue));
 //        System.out.println(eventPlanner.getVenues());
     }
+   
     @AfterMethod
     public void tearDown(){
         venue=null;

@@ -1,5 +1,7 @@
 package com.ultralesson.eventplanner.model;
 
+import com.ultralesson.eventplanner.exceptions.VenueException;
+
 import java.util.Objects;
 
 public class Venue {
@@ -11,6 +13,9 @@ public class Venue {
     public Venue(int id, String name, String address, int capacity) {
         if (capacity < 0) {
             throw new IllegalArgumentException("Capacity cannot be negative");
+        }
+        if(name.isEmpty()||address.isEmpty()){
+            throw new VenueException("Incomplete details");
         }
         this.id = id;
         this.name = name;
